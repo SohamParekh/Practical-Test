@@ -1,0 +1,86 @@
+﻿@model WebApplication1.Models.AuthorAC
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Author</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+    </dl>
+
+    <div id="modalHere"></div>
+    <p>
+        @*<a asp-controller="Author" asp-route-id="@Model.Id" asp-action="AddBookWithAuthorId">Add New Book</a>*@
+        <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#addBook"
+                data-url="@Url.Action("AddBookWithAuthorId",new { id = Model.Id })">Create New Book</button>
+    </p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Book Name
+                </th>
+                <th>
+                    Quantity
+                </th>
+                <th>
+                    Published Date
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Book)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PublishedDate)
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#addBook"
+                                data-url="@Url.Action("EditBook",new { id = item.Id })">
+                            Edit
+                        </button> |
+                        <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#addBook"
+                                data-url="@Url.Action("DeleteBook",new { id = item.Id })">
+                            Delete
+                        </button>
+</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
